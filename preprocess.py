@@ -7,6 +7,7 @@
 # ref: http://yukinoi.hatenablog.com/entry/2015/10/11/205006
 import neologdn
 import re
+import argparse
 
 brackets_pair = re.compile('【.*】$')
 
@@ -24,13 +25,27 @@ def to_lowercase(input):
     output = input.lower()
     return output
 
+def normalize_file(in_fname, out_fname):
+    with open(in_fname, 'r') as rf, open(out_fname, 'w') as wf:
+        for line in rf:
+            n = call_neologdn(line)
+            n = remove_brackets(n)
+            n = to_lowercase(n)
+            wf.write(n)
+
+def get_args():
+    p = argparse.ArgumentParser()
+    p.add_argument('--input-article', default='article.txt')
+    p.add_argument('--input-abstract', default='abstract.txt')
+    p.add_argument('--output-article', default='pp-article.txt')
+    p.add_argument('--output-abstract', default='pp-abstract.txt')
+    args = p.parse_args()
+    return args
+
 def main():
-    #x = "こんこん、ふぉっくす紺子だよ！お花見日和なのに、おしごと【紺子にゅうす】"
-    x = "新型iPad情報でビンゴも！ITのいまを伝える【デジ通】まとめ読み"
-    #print(remove_brackets(x))
-    print(x)
-    # print(call_neologdn(x))
-    print(to_lowercase(x))
+    args = get_args()
+    normalize_file(args.input_article, args.output_article)
+    normalize_file(args.input_abstract, args.output_abstract)
 
 if __name__ == '__main__':
     main()
