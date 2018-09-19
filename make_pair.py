@@ -46,6 +46,18 @@ def get_files(path):
             files.append(n)
     return files
 
+def make_pair(files_dir, art_fname, abst_fname):
+    with open(art_fname, 'w') as rf, open(abst_fname, 'w') as bf:
+        for dname in get_dirs(files_dir):
+            for n in get_files(dname):
+                fname = os.path.join(dname, n)
+                _, _, abstract, article = read_file(fname)
+                rf.write(article)
+                bf.write(abstract)
+                rf.write('\n')
+                bf.write('\n')
+    return
+
 def get_args():
     p = argparse.ArgumentParser()
     p.add_argument('--input_dir', type=str, default="text")
@@ -56,10 +68,7 @@ def get_args():
 
 def main():
     args = get_args()
-    # fname = "/home/knok/nlp/livedoor-news-corpus/text/it-life-hack/it-life-hack-6918825.txt"
-    # print(read_file(fname))
-    #print(get_dirs('text'))
-    print(get_files('text/it-life-hack'))
+    make_pair(args.input_dir, args.output_article, args.output_abstract)
 
 if __name__ == '__main__':
     main()
