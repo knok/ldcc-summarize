@@ -4,6 +4,7 @@
 """
 
 import argparse
+import os
 
 # ファイル名規則
 # text/[category]/[category]-[num+].txt
@@ -27,6 +28,14 @@ def read_file(path):
             article += line[:-1]
     return url, timestamp, abstract, article
 
+def get_dirs(path):
+    dirs = []
+    for p in os.listdir(path):
+        d = os.path.join(path, p)
+        if os.path.isdir(d):
+            dirs.append(d)
+    return dirs
+
 def get_args():
     p = argparse.ArgumentParser()
     p.add_argument('--input_dir', type=str, default="text")
@@ -37,8 +46,9 @@ def get_args():
 
 def main():
     args = get_args()
-    fname = "/home/knok/nlp/livedoor-news-corpus/text/it-life-hack/it-life-hack-6918825.txt"
-    print(read_file(fname))
+    # fname = "/home/knok/nlp/livedoor-news-corpus/text/it-life-hack/it-life-hack-6918825.txt"
+    # print(read_file(fname))
+    print(get_dirs('text'))
 
 if __name__ == '__main__':
     main()
