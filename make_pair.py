@@ -5,6 +5,7 @@
 
 import argparse
 import os
+import re
 
 # ファイル名規則
 # text/[category]/[category]-[num+].txt
@@ -36,6 +37,15 @@ def get_dirs(path):
             dirs.append(d)
     return dirs
 
+text_pattern = re.compile('[a-z-]+-\d+.txt')
+
+def get_files(path):
+    files = []
+    for n in os.listdir(path):
+        if text_pattern.fullmatch(n):
+            files.append(n)
+    return files
+
 def get_args():
     p = argparse.ArgumentParser()
     p.add_argument('--input_dir', type=str, default="text")
@@ -48,7 +58,8 @@ def main():
     args = get_args()
     # fname = "/home/knok/nlp/livedoor-news-corpus/text/it-life-hack/it-life-hack-6918825.txt"
     # print(read_file(fname))
-    print(get_dirs('text'))
+    #print(get_dirs('text'))
+    print(get_files('text/it-life-hack'))
 
 if __name__ == '__main__':
     main()
