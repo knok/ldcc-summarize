@@ -2,6 +2,8 @@
 #
 FNAME=ldcc-20140209.tar.gz
 MECAB_OPTS=
+FINAL_OUTPUTS = train-abstract.txt train-article.txt \
+	test-abstract.txt test-article.txt
 
 # download
 $(FNAME):
@@ -24,7 +26,11 @@ wakati-pp-abstract.txt wakati-pp-article.txt: pp-abstract.txt pp-article.txt
 	mecab -Owakati $(MECAB_OPTS) < pp-abstract.txt > wakati-pp-abstract.txt
 	mecab -Owakati $(MECAB_OPTS) < pp-article.txt > wakati-pp-article.txt
 
-all: wakati-pp-abstract.txt wakati-pp-article.txt
+# shuffle and split
+$(FINAL_OUTPUTS): wakati-pp-abstract.txt wakati-pp-article.txt
+	python split.py
+
+all: $(FINAL_OUTPUTS)
 
 #
 clean:
@@ -32,3 +38,4 @@ clean:
 	rm -f abstract.txt article.txt
 	rm -f pp-abstract.txt pp-article.txt
 	rm -f wakati-pp-abstract.txt wakati-pp-article.txt
+	rm -f $(FINAL_OUTPUTS)
