@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 FNAME=ldcc-20140209.tar.gz
-MECAB_OPTS=
+MECAB_OPTS = -b 40000
 FINAL_OUTPUTS = train-abstract.txt train-article.txt \
 	test-abstract.txt test-article.txt
 
