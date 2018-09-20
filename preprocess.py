@@ -9,12 +9,14 @@ import neologdn
 import re
 import argparse
 
-brackets_pair = re.compile('【.*】$')
+brackets_pair = re.compile('【[^】]*】$')
+brackets_head = re.compile('^【[^】]*】')
 
 def remove_brackets(input):
-    """末尾の隅付き括弧で囲まれた部分を除去
+    """先頭、末尾の隅付き括弧で囲まれた部分を除去
     """
-    output = re.sub(brackets_pair, '', input)
+    output = re.sub(brackets_head, '',
+                    re.sub(brackets_pair, '', input))
     return output
 
 def call_neologdn(input):
