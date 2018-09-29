@@ -9,7 +9,7 @@ FINAL_OUTPUTS = train-abstract.txt train-article.txt \
 $(FNAME):
 	wget https://www.rondhuit.com/download/$(FNAME)
 # unpack
-text:
+text: $(FNAME)
 	tar xvf $(FNAME)
 
 # make article/abstract pair
